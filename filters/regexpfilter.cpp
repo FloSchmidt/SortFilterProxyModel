@@ -7,7 +7,8 @@ namespace qqsfpm {
     \qmltype RegExpFilter
     \inherits RoleFilter
     \inqmlmodule SortFilterProxyModel
-    \brief  Filters rows matching a regular expression
+    \ingroup Filters
+    \brief  Filters rows matching a regular expression.
 
     A RegExpFilter is a \l RoleFilter that accepts rows matching a regular rexpression.
 
@@ -55,7 +56,7 @@ void RegExpFilter::setPattern(const QString& pattern)
 
     The pattern used to filter the contents of the source model.
 
-    Only the source model's value having their \l roleName data matching this \l pattern with the specified \l syntax will be kept.
+    Only the source model's value having their \l RoleFilter::roleName data matching this \l pattern with the specified \l syntax will be kept.
 
     \value RegExpFilter.RegExp A rich Perl-like pattern matching syntax. This is the default.
     \value RegExpFilter.Wildcard This provides a simple pattern matching syntax similar to that used by shells (command interpreters) for "file globbing".

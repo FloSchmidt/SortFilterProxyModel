@@ -13,45 +13,23 @@ namespace qqsfpm {
 /*!
     \qmltype ProxyRole
     \inqmlmodule SortFilterProxyModel
-    \brief Base type for the \l SortFilterProxyModel proxy roles
+    \ingroup ProxyRoles
+    \brief Base type for the \l SortFilterProxyModel proxy roles.
 
     The ProxyRole type cannot be used directly in a QML file.
     It exists to provide a set of common properties and methods,
     available across all the other proxy role types that inherit from it.
     Attempting to use the ProxyRole type directly will result in an error.
 */
-ProxyRole::ProxyRole(QObject *parent) : QObject(parent)
-{
-}
 
-/*!
-    \qmlproperty string ProxyRole::name
-
-    This property holds the role name of the proxy role.
-*/
-const QString& ProxyRole::name() const
-{
-    return m_name;
-}
-
-void ProxyRole::setName(const QString& name)
-{
-    if (m_name == name)
-        return;
-
-    Q_EMIT nameAboutToBeChanged();
-    m_name = name;
-    Q_EMIT nameChanged();
-}
-
-QVariant ProxyRole::roleData(const QModelIndex& sourceIndex, const QQmlSortFilterProxyModel& proxyModel)
+QVariant ProxyRole::roleData(const QModelIndex& sourceIndex, const QQmlSortFilterProxyModel& proxyModel, const QString &name)
 {
     if (m_mutex.tryLock()) {
-        QVariant result = data(sourceIndex, proxyModel);
+        QVariant result = data(sourceIndex, proxyModel, name);
         m_mutex.unlock();
         return result;
     } else {
-        return QVariant{};
+        return {};
     }
 }
 
@@ -64,12 +42,5 @@ void ProxyRole::invalidate()
 {
     Q_EMIT invalidated();
 }
-
-
-
-
-
-
-
 
 }

@@ -6,7 +6,8 @@ namespace qqsfpm {
     \qmltype RangeFilter
     \inherits RoleFilter
     \inqmlmodule SortFilterProxyModel
-    \brief Filters rows between boundary values
+    \ingroup Filters
+    \brief Filters rows between boundary values.
 
     A RangeFilter is a \l RoleFilter that accepts rows if their data is between the filter's minimum and maximum value.
 
@@ -129,9 +130,9 @@ bool RangeFilter::filterRow(const QModelIndex& sourceIndex, const QQmlSortFilter
 {
     QVariant value = sourceData(sourceIndex, proxyModel);
     bool lessThanMin = m_minimumValue.isValid() &&
-            m_minimumInclusive ? value < m_minimumValue : value <= m_minimumValue;
+            (m_minimumInclusive ? value < m_minimumValue : value <= m_minimumValue);
     bool moreThanMax = m_maximumValue.isValid() &&
-            m_maximumInclusive ? value > m_maximumValue : value >= m_maximumValue;
+            (m_maximumInclusive ? value > m_maximumValue : value >= m_maximumValue);
     return !(lessThanMin || moreThanMax);
 }
 
